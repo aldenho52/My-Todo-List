@@ -5,10 +5,37 @@ const TodoList = () => {
     const [todos, setTodos] = useState([])
     const [newTodo, setNewTodo] = useState('')
     const [editTodo, setEditTodo] = useState({})
+    const [addTodo, setAddTodo] = useState(false)
 
     useEffect(() => {
         
-    }, [])
+    }, [todos])
+
+    const submitNewTodo = e => {
+        e.preventDefault()
+        const incomingTodo = {
+            text: newTodo
+        }
+        console.log(incomingTodo)
+        if (todos.length === 0) {
+            setTodos(incomingTodo)
+        } else(
+            setTodos(...todos, incomingTodo)
+        )
+        setAddTodo(false)
+        setNewTodo('')
+    }
+    const showAddTodo = () => {
+        setAddTodo(true)
+    }
+
+    const onChangeNewTodo = (e) => {
+        setNewTodo(e.target.value)
+      };
+
+    const onChangeSearch = (e) => {
+        setSearchInput(e.target.value)
+      };
 
     return (
         <div>
@@ -20,15 +47,37 @@ const TodoList = () => {
                 <div>
                     <div>
                         <label>
-                            <input />
+                            <input 
+                                value={searchInput}
+                                onChange={onChangeSearch}
+                                name="searchinput"
+                                type="text"
+                                placeholder="search"
+                            />
                         </label>
-                        <button>New</button>
+                        <button onClick={showAddTodo}>New</button>
                     </div>
+                    {addTodo && 
+                        <div>
+                        <form onSubmit={submitNewTodo}>
+                            <label>
+                            <input 
+                                value={newTodo}
+                                onChange={onChangeNewTodo}
+                                name="newtodo"
+                                type="text"
+                                placeholder="new todo"
+                            />
+                            </label>
+                            <button>Save</button>
+                        </form>
+                        </div>}
                     <div>
-
-                    </div>
-                    <div>
-                        {}
+                        {todos.map(todo => {
+                            return (
+                                <div>{todo.text}</div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>
