@@ -100,7 +100,6 @@ const Todo = props => {
 
 
     const editTodo = textValue => {
-        console.log(textValue)
         setEditInput({...editInput, edittodo: textValue})
         setEditing(true)
     }
@@ -118,11 +117,9 @@ const Todo = props => {
     }
 
     const deleteTodo = textValue => {
-        console.log(textValue)
         const index = todos.findIndex(todo => {
             return todo.text.newtodo === textValue
         })
-        console.log(index)
         const updatedList = todos.filter(todo => {
             return todo.text.newtodo !== textValue
         })
