@@ -36,6 +36,7 @@ const StyledInputContainer = styled.div`
     padding: 8%;
     display: flex;
     justify-content: space-around;
+    border-bottom: 3px solid black;
 `;
 const StyledDivHeader = styled.div`
     width: 100%;
@@ -61,6 +62,10 @@ const StyledButton = styled.button`
     color: white;
     background: #1890ff;
     margin: 2% 2% 0 0;
+`;
+const StyledAddTodoDiv = styled.div`
+    flex: display;
+    justify-content: space-between;
 `;
 
 const initialValues = {
@@ -156,7 +161,7 @@ const TodoList = () => {
                     <StyledSearchBtn onClick={showAddTodo}>New</StyledSearchBtn>
                 </StyledInputContainer>
                 {addTodo && 
-                <div>
+                <StyledAddTodoDiv>
                 <form onSubmit={submitNewTodo}>
                     <label>
                     <input 
@@ -175,7 +180,7 @@ const TodoList = () => {
                         {errors.newtodo ? `${errors.newtodo}` : ''}
                     </StyledError>
                 </form>
-                </div>}
+                </StyledAddTodoDiv>}
                 {filteredList.map(todo => {
                     return (
                         <Todo key={todo.id} todo={todo} todos={todos} setTodos={setTodos} />
