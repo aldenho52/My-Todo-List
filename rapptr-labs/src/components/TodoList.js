@@ -1,26 +1,43 @@
 import React, {useEffect, useState} from 'react'
 
+// styling and icons
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 const TodoList = () => {
     const [searchInput, setSearchInput] = useState('')
     const [todos, setTodos] = useState([])
     const [newTodo, setNewTodo] = useState('')
-    const [editTodo, setEditTodo] = useState({})
+    const [editTodoInput, setEditTodoInput] = useState({})
     const [addTodo, setAddTodo] = useState(false)
 
     useEffect(() => {
         
     }, [todos])
 
+    const deleteTodo = textValue => {
+        console.log(textValue)
+        const index = todos.findIndex(todo => {
+            return todo.text === textValue
+        })
+        console.log(index)
+        const updatedList = todos.filter(todo => {
+            return todo.text !== textValue
+        })
+        setTodos(updatedList)
+    }
+
     const submitNewTodo = e => {
         e.preventDefault()
         const incomingTodo = {
+            id: Math.floor(Math.random()*100000),
             text: newTodo
         }
         console.log(incomingTodo)
         if (todos.length === 0) {
-            setTodos(incomingTodo)
+            setTodos([incomingTodo])
         } else(
-            setTodos(...todos, incomingTodo)
+            setTodos([...todos, incomingTodo])
         )
         setAddTodo(false)
         setNewTodo('')
@@ -36,6 +53,10 @@ const TodoList = () => {
     const onChangeSearch = (e) => {
         setSearchInput(e.target.value)
       };
+
+    const filteredList = todos.filter((item) => {
+        return item.text.toLowerCase().indexOf(searchInput.toLowerCase()) !== -1
+    })
 
     return (
         <div>
@@ -73,9 +94,15 @@ const TodoList = () => {
                         </form>
                         </div>}
                     <div>
-                        {todos.map(todo => {
+                        {filteredList.map(todo => {
                             return (
-                                <div>{todo.text}</div>
+                                <div>
+                                    <p>{todo.text}</p>
+                                    <div>
+                                    <EditIcon onClick={() => setEditTodoInput(todo.text)}></EditIcon>
+                                    <DeleteIcon onClick={() => deleteTodo(todo.text)}></DeleteIcon>
+                                    </div>
+                                </div>
                             )
                         })}
                     </div>
