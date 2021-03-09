@@ -1,0 +1,26 @@
+.input-container {
+    position: relative;
+}
+
+.input-container > img {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+  }
+  
+.input-container > input {
+    padding-left: 35px;
+  }
+
+.icons {
+    size: 5px;
+    margin-bottom: 10px;
+}
+
+input {
+  outline: none;
+ }
+
+.invalid {
+  border: 3px solid red;
+}

@@ -7,6 +7,10 @@ import Todo from './Todo';
 import * as yup from 'yup';
 import schema from '../validation/NewTodoSchema';
 
+// styling and icons
+import '../styling/TodoList.css'
+import searchIcon from '../images/search_icon.png'
+
 // styled components
 const StyledContainer = styled.div`
     display: flex;
@@ -29,7 +33,9 @@ const StyledDiv = styled.div`
 `;
 
 const StyledInputContainer = styled.div`
-    margin-bottom: 10%;
+    padding: 8%;
+    display: flex;
+    justify-content: space-around;
 `;
 const StyledDivHeader = styled.div`
     width: 100%;
@@ -37,8 +43,14 @@ const StyledDivHeader = styled.div`
     justify-content: flex-end;
 `;
 const StyledInput = styled.input`
-    margin-top: 1%;
     height: 6vh;
+    width: 70%;
+    border-radius: 30px;
+    font-size: 1.15rem;
+`;
+const StyledSearchBtn = styled.button`
+    border-radius: 30px;
+    margin-left: 5%;
 `;
 const StyledError = styled.div`
     color: red;
@@ -128,18 +140,21 @@ const TodoList = () => {
             </StyledDivHeader> 
             <h1>My To-Do List</h1>
             <StyledDiv>
-                <div>
+                <StyledInputContainer>
                     <label>
-                        <input 
+                    <div className='input-container'>
+                        <img className='icons' alt='magnifying glass icon' src={searchIcon}/>
+                        <StyledInput 
                             value={searchInput}
                             onChange={onChangeSearch}
                             name="searchinput"
                             type="text"
                             placeholder="search"
                         />
+                    </div>
                     </label>
-                    <button onClick={showAddTodo}>New</button>
-                </div>
+                    <StyledSearchBtn onClick={showAddTodo}>New</StyledSearchBtn>
+                </StyledInputContainer>
                 {addTodo && 
                 <div>
                 <form onSubmit={submitNewTodo}>
@@ -156,9 +171,9 @@ const TodoList = () => {
                     </div>
                     </label>
                     <button disabled={disabled}>Save</button>
-                    <div style={{ color: 'red' }}>
+                    <StyledError>
                         {errors.newtodo ? `${errors.newtodo}` : ''}
-                    </div>
+                    </StyledError>
                 </form>
                 </div>}
                 {filteredList.map(todo => {
