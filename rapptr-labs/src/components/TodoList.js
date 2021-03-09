@@ -31,7 +31,6 @@ const StyledDiv = styled.div`
     border: 3px solid black;
     border-radius: 10px;
     width: 80%;
-    
 `;
 
 const StyledInputContainer = styled.div`
@@ -114,8 +113,6 @@ const StyledTodoContainer = styled.div`
     width: 100%;
 `;
 
-
-
 // initial state and error values
 const initialValues = {
     newtodo: ''
@@ -128,6 +125,7 @@ const initialFormErrors = {
 const TodoList = () => {
     const { push } = useHistory();
     const [searchInput, setSearchInput] = useState('')
+    // gets todo list saved in local storage
     const [todos, setTodos] = useState(() => {
         return localStorage.getItem('todoList') ? JSON.parse(localStorage.getItem('todoList')): []
     })
@@ -136,6 +134,7 @@ const TodoList = () => {
     const [addTodo, setAddTodo] = useState(false)
     const [disabled, setDisabled] = useState(true);
 
+    // yup validation
     const setFormErrors = (name, value) => {
         yup
           .reach(schema, name)
@@ -144,12 +143,13 @@ const TodoList = () => {
           .catch(err => setErrors({ ...errors, [name]: err.errors[0] }));
       };
 
+    // updates local storage every time list changes and runs schema through new todo.
     useEffect(() => {
         localStorage.setItem('todoList', JSON.stringify(todos))
         schema.isValid(newTodo).then(valid => setDisabled(!valid));
     }, [todos, newTodo])
 
-
+    // add new todo
     const submitNewTodo = e => {
         e.preventDefault()
         const incomingTodo = {
@@ -165,6 +165,7 @@ const TodoList = () => {
         setNewTodo('')
     }
 
+    // reveals the addTodo row after clicking on "New" button
     const showAddTodo = () => {
         setAddTodo(true)
     }
@@ -182,7 +183,8 @@ const TodoList = () => {
       const logoutHandler = e => {
           push('/')
       }
-
+    
+    // filters todo list based on search input
     const filteredList = todos.filter((item) => {
         return item.text.newtodo.toLowerCase().indexOf(searchInput.toLowerCase()) !== -1
     })

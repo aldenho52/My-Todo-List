@@ -56,6 +56,7 @@ const LoginPage = () => {
     const [errors, setErrors] = useState(initialFormErrors);
     const [disabled, setDisabled] = useState(true);
 
+    // form validation 
     const setFormErrors = (name, value) => {
         yup
           .reach(schema, name)
@@ -70,6 +71,7 @@ const LoginPage = () => {
         });
       }, [loginInfo]);
 
+    // login submit action
     const onSubmit = e => {
         e.preventDefault()
         axios.post('http://dev.rapptrlabs.com/Tests/scripts/user-login.php', loginInfo)
