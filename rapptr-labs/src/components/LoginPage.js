@@ -13,13 +13,13 @@ import passwordLockIcon from '../images/password_lock.png'
 
 
 const initialValues = {
-    email: '',
-    password: ''
+    user_email: '',
+    user_password: ''
 }
 
 const initialFormErrors = {
-    email: '',
-    password: ''
+    user_email: '',
+    user_password: ''
 }
 
 
@@ -71,15 +71,15 @@ const LoginPage = () => {
                 <div className='input-container'>
                 <img className='icons' alt='account icon' src={accountIcon}/>
                 <input
-                    value={loginInfo.email}
+                    value={loginInfo.user_email}
                     onChange={onChange}
-                    name="email"
+                    name="user_email"
                     type="email"
                     placeholder="user@rapptrlabs.com"
                 />
                 </div>
                 <div style={{ color: 'red' }}>
-                {errors.email ? `${errors.email}` : ''}
+                {errors.user_email ? `${errors.user_email}` : ''}
               </div>
                 </label>
                 <label>
@@ -87,15 +87,15 @@ const LoginPage = () => {
                 <div className='input-container'>
                     <img className='icons' alt='account icon' src={passwordLockIcon}/>
                     <input
-                        value={loginInfo.password}
+                        value={loginInfo.user_password}
                         onChange={onChange}
-                        name="password"
+                        name="user_password"
                         type="password"
                         placeholder='Must be at least 4 characters'
                     />
                 </div>
                 <div style={{ color: 'red' }}>
-                {errors.password ? `${errors.password}` : ''}
+                {errors.user_password ? `${errors.user_password}` : ''}
               </div>
                 </label>
                 <button disabled={disabled}>Login</button>

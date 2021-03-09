@@ -1,19 +1,42 @@
 import React, {useEffect, useState} from 'react'
 
+// validation
+import * as yup from 'yup';
+import schema from '../validation/NewTodoSchema';
+
 // styling and icons
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+
+const initialFormErrors = {
+    newtodo: ''
+}
+
+
 
 const TodoList = () => {
     const [searchInput, setSearchInput] = useState('')
     const [todos, setTodos] = useState([])
     const [newTodo, setNewTodo] = useState('')
+    const [errors, setErrors] = useState(initialFormErrors);
     const [editTodoInput, setEditTodoInput] = useState({})
     const [addTodo, setAddTodo] = useState(false)
+
+    const setFormErrors = (name, value) => {
+        yup
+          .reach(schema, name)
+          .validate(value)
+          .then(() => setErrors({ ...errors, [name]: '' }))
+          .catch(err => setErrors({ ...errors, [name]: err.errors[0] }));
+      };
 
     useEffect(() => {
         
     }, [todos])
+
+    const editTodo = textValue => {
+        console.log(textValue)
+    }
 
     const deleteTodo = textValue => {
         console.log(textValue)
@@ -31,6 +54,7 @@ const TodoList = () => {
         e.preventDefault()
         const incomingTodo = {
             id: Math.floor(Math.random()*100000),
+            editing: false,
             text: newTodo
         }
         console.log(incomingTodo)
@@ -47,6 +71,8 @@ const TodoList = () => {
     }
 
     const onChangeNewTodo = (e) => {
+        const { name, value } = e.target;
+        setFormErrors(name, value); 
         setNewTodo(e.target.value)
       };
 
@@ -91,6 +117,9 @@ const TodoList = () => {
                             />
                             </label>
                             <button>Save</button>
+                            <div style={{ color: 'red' }}>
+                                {errors.newtodo ? `${errors.newtodo}` : ''}
+                            </div>
                         </form>
                         </div>}
                     <div>
@@ -99,7 +128,7 @@ const TodoList = () => {
                                 <div>
                                     <p>{todo.text}</p>
                                     <div>
-                                    <EditIcon onClick={() => setEditTodoInput(todo.text)}></EditIcon>
+                                    <EditIcon onClick={() => editTodo(todo.text)}></EditIcon>
                                     <DeleteIcon onClick={() => deleteTodo(todo.text)}></DeleteIcon>
                                     </div>
                                 </div>
