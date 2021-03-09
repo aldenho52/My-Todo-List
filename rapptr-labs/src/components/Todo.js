@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import styled from 'styled-components';
 
 // validation
 import * as yup from 'yup';
@@ -8,12 +9,68 @@ import schema from '../validation/TodoSchema.js';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+// styled components
+const StyledTodo = styled.div`
+    width: 100%;
+    border-bottom: 3px solid black;
+`;
+const StyledAddDiv = styled.div`
+`;
+const StyledForm = styled.form`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 5%;
+`;
+const StyledSaveInput = styled.input`
+    margin-left: 10%;    
+    height: 4vh;
+    width: 70%;
+    font-size: 1.15rem;
+`;
+const StyledSaveBtn = styled.button`
+    border: 2px solid black;
+    color: white;
+    font-weight: 900;
+    background: black;
+    margin: 2% 5% 0 0;
+    width: 25%;
+    height: 4vh;
+`;
+const StyledError = styled.div`
+    color: red;
+    font-size: 0.7rem;
+    padding-left: 8%;
+    margin-bottom: 3%;
+`;
+const StyledDiv = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+`;
+
+const StyledP = styled.p`
+    max-width: 75%;
+    text-overflow: ellipsis;
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+`;
+const IconContainer = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+
+// initial values
 const initialFormErrors = {
     edittodo: ''
 }
 const initialValues = {
     edittodo: ''
 }
+
 
 const Todo = props => {
     const {todo, todos, setTodos} = props
@@ -74,12 +131,12 @@ const Todo = props => {
 
 
     return (
-        <div>
+        <StyledTodo>
         {editing ? 
-            <div>
-                <form onSubmit={saveEdits}>
+            <StyledAddDiv>
+                <StyledForm onSubmit={saveEdits}>
                     <label>
-                    <input 
+                    <StyledSaveInput 
                         value={editInput.edittodo}
                         onChange={onChangeNewTodo}
                         name="edittodo"
@@ -87,18 +144,21 @@ const Todo = props => {
                         placeholder="new todo"
                     />
                     </label>
-                    <button disabled={disabled}>Save</button>
-                </form>
-            </div>
+                    <StyledSaveBtn disabled={disabled}>Save</StyledSaveBtn>
+                </StyledForm>
+                <StyledError>
+                        {errors.edittodo ? `${errors.edittodo}` : ''}
+                </StyledError>
+            </StyledAddDiv>
         :
-        <div>
-            <p>{todo.text.newtodo}</p>
-            <div>
+        <StyledDiv>
+            <StyledP>{todo.text.newtodo}</StyledP>
+            <IconContainer>
             <EditIcon onClick={() => editTodo(todo.text.newtodo)}></EditIcon>
             <DeleteIcon onClick={() => deleteTodo(todo.text.newtodo)}></DeleteIcon>
-            </div>
-        </div>}
-        </div>
+            </IconContainer>
+        </StyledDiv>}
+        </StyledTodo>
     )
 }
 

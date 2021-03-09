@@ -18,6 +18,8 @@ const StyledContainer = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 `;
 
 const StyledDiv = styled.div`
@@ -37,6 +39,7 @@ const StyledInputContainer = styled.div`
     display: flex;
     justify-content: space-around;
     border-bottom: 3px solid black;
+    width: 85%;
 `;
 const StyledDivHeader = styled.div`
     width: 100%;
@@ -48,12 +51,22 @@ const StyledInput = styled.input`
     width: 70%;
     border-radius: 30px;
     font-size: 1.15rem;
+    max-height: 10vh;
+    @media (min-width: 600px) {
+        width: 100%;
+        margin-left: 3%;
+    }
 `;
 const StyledSearchBtn = styled.button`
     border-radius: 30px;
     margin-left: 5%;
     color: white;
     background: #1890ff;
+    @media (min-width: 600px) {
+        width: 20%;
+        font-size: 1.5rem;
+        padding: 0px;
+    }
 `;
 const StyledError = styled.div`
     color: red;
@@ -65,7 +78,7 @@ const StyledButton = styled.button`
     border: 2px solid #1890ff;
     color: white;
     background: #1890ff;
-    margin: 2% 2% 0 0;
+    margin: 4% 8% 0 0;
 `;
 const StyledForm = styled.form`
     display: flex;
@@ -92,6 +105,13 @@ const StyledSaveBtn = styled.button`
 
 const StyledAddDiv = styled.div`
     border-bottom: 3px solid black;
+    width: 100%;
+`;
+
+const StyledTodoContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 `;
 
 
@@ -200,9 +220,6 @@ const TodoList = () => {
                         type="text"
                         placeholder="new todo"
                     />
-                    <div style={{ color: 'red' }}>
-                        {errors.newTodo ? `${errors.newtodo}` : ''}
-                    </div>
                     </label>
                     <StyledSaveBtn disabled={disabled}>Save</StyledSaveBtn>
                 </StyledForm>
@@ -211,11 +228,13 @@ const TodoList = () => {
                 </StyledError>
                 </StyledAddDiv> 
                 }
+                <StyledTodoContainer>
                 {filteredList.map(todo => {
                     return (
                         <Todo key={todo.id} todo={todo} todos={todos} setTodos={setTodos} />
                     )
                 })}
+                </StyledTodoContainer>
             </StyledDiv>
         </StyledContainer>
     )

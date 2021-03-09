@@ -1,14 +1,14 @@
-.input-container {
+.input-container-login {
     position: relative;
 }
 
-.input-container > img {
+.input-container-login > img {
     position: absolute;
     top: 6px;
     left: 5px;
   }
   
-.input-container > input {
+.input-container-login > input {
     padding-left: 30px;
   }
 
@@ -23,4 +23,15 @@ input {
 
 .invalid {
   border: 3px solid red;
+}
+
+@media (min-width: 600px) {
+  .input-container-login > img {
+    position: absolute;
+    top: 20px;
+    left: 5px;
+  }
+  input {
+    padding-left: 5%;
+  }
 }

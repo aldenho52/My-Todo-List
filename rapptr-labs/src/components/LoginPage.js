@@ -96,7 +96,7 @@ const LoginPage = () => {
                 <StyledInputContainer>
                     <label>
                     Email
-                    <div className='input-container'>
+                    <div className='input-container-login'>
                     <img className='icons' alt='account icon' src={accountIcon}/>
                     <StyledInput
                         value={loginInfo.user_email}
@@ -115,7 +115,7 @@ const LoginPage = () => {
                 <StyledInputContainer>
                     <label>
                     Password
-                    <div className='input-container'>
+                    <div className='input-container-login'>
                         <img className='icons' alt='account icon' src={passwordLockIcon}/>
                         <StyledInput
                             value={loginInfo.user_password}
