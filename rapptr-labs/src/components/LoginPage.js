@@ -37,6 +37,7 @@ const StyledButton = styled.button`
     border: 2px solid #1890ff;
     color: white;
     background: #1890ff;
+    height: 5vh;
 `;
 
 const initialValues = {
