@@ -1,13 +1,55 @@
 import React, {useEffect, useState} from 'react'
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import Todo from './Todo';
 
 // validation
 import * as yup from 'yup';
 import schema from '../validation/NewTodoSchema';
 
-// styling and icons
+// styled components
+const StyledContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+`;
 
-import Todo from './Todo';
+const StyledDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+    border: 3px solid black;
+    border-radius: 10px;
+    width: 80%;
+    
+`;
+
+const StyledInputContainer = styled.div`
+    margin-bottom: 10%;
+`;
+const StyledDivHeader = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+`;
+const StyledInput = styled.input`
+    margin-top: 1%;
+    height: 6vh;
+`;
+const StyledError = styled.div`
+    color: red;
+    font-size: 0.7rem;
+`;
+const StyledButton = styled.button`
+    border: 2px solid #1890ff;
+    color: white;
+    background: #1890ff;
+    margin: 2% 2% 0 0;
+`;
 
 const initialValues = {
     newtodo: ''
@@ -56,7 +98,7 @@ const TodoList = () => {
         setAddTodo(false)
         setNewTodo('')
     }
-    
+
     const showAddTodo = () => {
         setAddTodo(true)
     }
@@ -80,56 +122,52 @@ const TodoList = () => {
     })
 
     return (
-        <div>
-            <header>
-                <button onClick={logoutHandler}>Logout</button>
-            </header>
-            <div>
-                <h1>My To-Do List</h1>
+        <StyledContainer>
+            <StyledDivHeader>
+                <StyledButton onClick={logoutHandler}>Logout</StyledButton>
+            </StyledDivHeader> 
+            <h1>My To-Do List</h1>
+            <StyledDiv>
                 <div>
-                    <div>
-                        <label>
-                            <input 
-                                value={searchInput}
-                                onChange={onChangeSearch}
-                                name="searchinput"
-                                type="text"
-                                placeholder="search"
-                            />
-                        </label>
-                        <button onClick={showAddTodo}>New</button>
-                    </div>
-                    {addTodo && 
-                        <div>
-                        <form onSubmit={submitNewTodo}>
-                            <label>
-                            <input 
-                                value={newTodo.newtodo}
-                                onChange={onChangeNewTodo}
-                                name="newtodo"
-                                type="text"
-                                placeholder="new todo"
-                            />
-                            <div style={{ color: 'red' }}>
-                                {errors.newTodo ? `${errors.newtodo}` : ''}
-                            </div>
-                            </label>
-                            <button disabled={disabled}>Save</button>
-                            <div style={{ color: 'red' }}>
-                                {errors.newtodo ? `${errors.newtodo}` : ''}
-                            </div>
-                        </form>
-                        </div>}
-                    <div>
-                        {filteredList.map(todo => {
-                            return (
-                                <Todo key={todo.id} todo={todo} todos={todos} setTodos={setTodos} />
-                            )
-                        })}
-                    </div>
+                    <label>
+                        <input 
+                            value={searchInput}
+                            onChange={onChangeSearch}
+                            name="searchinput"
+                            type="text"
+                            placeholder="search"
+                        />
+                    </label>
+                    <button onClick={showAddTodo}>New</button>
                 </div>
-            </div>
-        </div>
+                {addTodo && 
+                <div>
+                <form onSubmit={submitNewTodo}>
+                    <label>
+                    <input 
+                        value={newTodo.newtodo}
+                        onChange={onChangeNewTodo}
+                        name="newtodo"
+                        type="text"
+                        placeholder="new todo"
+                    />
+                    <div style={{ color: 'red' }}>
+                        {errors.newTodo ? `${errors.newtodo}` : ''}
+                    </div>
+                    </label>
+                    <button disabled={disabled}>Save</button>
+                    <div style={{ color: 'red' }}>
+                        {errors.newtodo ? `${errors.newtodo}` : ''}
+                    </div>
+                </form>
+                </div>}
+                {filteredList.map(todo => {
+                    return (
+                        <Todo key={todo.id} todo={todo} todos={todos} setTodos={setTodos} />
+                    )
+                })}
+            </StyledDiv>
+        </StyledContainer>
     )
 }
 

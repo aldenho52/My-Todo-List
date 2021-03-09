@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 
 // validation
 import * as yup from 'yup';
@@ -11,6 +12,32 @@ import '../styling/LoginPage.css'
 import accountIcon from '../images/account_icon.png'
 import passwordLockIcon from '../images/password_lock.png'
 
+// styled components
+const StyledDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+`;
+
+const StyledInputContainer = styled.div`
+    margin-bottom: 10%;
+`;
+const StyledInput = styled.input`
+    margin-top: 1%;
+    height: 6vh;
+`;
+const StyledError = styled.div`
+    color: red;
+    font-size: 0.7rem;
+`;
+const StyledButton = styled.button`
+    width: 100%;
+    border: 2px solid #1890ff;
+    color: white;
+    background: #1890ff;
+`;
 
 const initialValues = {
     user_email: '',
@@ -63,46 +90,50 @@ const LoginPage = () => {
       };
 
     return (
-        <div>
+        <StyledDiv>
             <h1>Rapptr Labs</h1>
             <form onSubmit={onSubmit}>
-                <label>
-                Email
-                <div className='input-container'>
-                <img className='icons' alt='account icon' src={accountIcon}/>
-                <input
-                    value={loginInfo.user_email}
-                    onChange={onChange}
-                    name="user_email"
-                    type="email"
-                    placeholder="user@rapptrlabs.com"
-                    className={errors.user_email ? 'invalid' : ''}
-                />
-                </div>
-                <div style={{ color: 'red' }}>
-                {errors.user_email ? `${errors.user_email}` : ''}
-              </div>
-                </label>
-                <label>
-                Password
-                <div className='input-container'>
-                    <img className='icons' alt='account icon' src={passwordLockIcon}/>
-                    <input
-                        value={loginInfo.user_password}
+                <StyledInputContainer>
+                    <label>
+                    Email
+                    <div className='input-container'>
+                    <img className='icons' alt='account icon' src={accountIcon}/>
+                    <StyledInput
+                        value={loginInfo.user_email}
                         onChange={onChange}
-                        name="user_password"
-                        type="password"
-                        placeholder='Must be at least 4 characters'
-                        className={errors.user_password ? 'invalid' : ''}
+                        name="user_email"
+                        type="email"
+                        placeholder="user@rapptrlabs.com"
+                        className={errors.user_email ? 'invalid' : ''}
                     />
-                </div>
-                <div style={{ color: 'red' }}>
-                {errors.user_password ? `${errors.user_password}` : ''}
-              </div>
-                </label>
-                <button disabled={disabled}>Login</button>
+                    </div>
+                    <StyledError>
+                        {errors.user_email ? `${errors.user_email}` : ''}
+                    </StyledError>
+                    </label>
+                </StyledInputContainer>
+                <StyledInputContainer>
+                    <label>
+                    Password
+                    <div className='input-container'>
+                        <img className='icons' alt='account icon' src={passwordLockIcon}/>
+                        <StyledInput
+                            value={loginInfo.user_password}
+                            onChange={onChange}
+                            name="user_password"
+                            type="password"
+                            placeholder='Must be at least 4 characters'
+                            className={errors.user_password ? 'invalid' : ''}
+                        />
+                    </div>
+                    <StyledError>
+                        {errors.user_password ? `${errors.user_password}` : ''}
+                    </StyledError>
+                    </label>
+                </StyledInputContainer>
+                <StyledButton disabled={disabled}>Login</StyledButton>
             </form>
-        </div>
+        </StyledDiv>
     )
 };
 
