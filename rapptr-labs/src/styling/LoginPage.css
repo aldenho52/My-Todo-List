@@ -30,7 +30,7 @@ button:disabled {
   border: 2px solid #1890ff;
   color: white;
   background: #1890ff;
-  opacity: 50%;
+  opacity: 0.5;
 }
 
 @media (min-width: 600px) {
