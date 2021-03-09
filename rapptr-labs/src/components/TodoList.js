@@ -97,7 +97,7 @@ const StyledSaveBtn = styled.button`
     color: white;
     font-weight: 900;
     background: black;
-    margin: 2% 5% 0 0;
+    margin: .5% 5% 0 0;
     width: 25%;
     height: 4vh;
 `;
