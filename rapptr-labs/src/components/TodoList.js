@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react'
+import { useHistory } from 'react-router-dom';
 
 // validation
 import * as yup from 'yup';
 import schema from '../validation/NewTodoSchema';
 
 // styling and icons
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+
+import Todo from './Todo';
 
 const initialFormErrors = {
     newtodo: ''
@@ -15,6 +16,7 @@ const initialFormErrors = {
 
 
 const TodoList = () => {
+    const { push } = useHistory();
     const [searchInput, setSearchInput] = useState('')
     const [todos, setTodos] = useState([])
     const [newTodo, setNewTodo] = useState('')
@@ -34,21 +36,9 @@ const TodoList = () => {
         
     }, [todos])
 
-    const editTodo = textValue => {
-        console.log(textValue)
-    }
 
-    const deleteTodo = textValue => {
-        console.log(textValue)
-        const index = todos.findIndex(todo => {
-            return todo.text === textValue
-        })
-        console.log(index)
-        const updatedList = todos.filter(todo => {
-            return todo.text !== textValue
-        })
-        setTodos(updatedList)
-    }
+
+
 
     const submitNewTodo = e => {
         e.preventDefault()
@@ -80,6 +70,10 @@ const TodoList = () => {
         setSearchInput(e.target.value)
       };
 
+      const logoutHandler = e => {
+          push('/')
+      }
+
     const filteredList = todos.filter((item) => {
         return item.text.toLowerCase().indexOf(searchInput.toLowerCase()) !== -1
     })
@@ -87,7 +81,7 @@ const TodoList = () => {
     return (
         <div>
             <header>
-                <button>Logout</button>
+                <button onClick={logoutHandler}>Logout</button>
             </header>
             <div>
                 <h1>My To-Do List</h1>
@@ -125,13 +119,7 @@ const TodoList = () => {
                     <div>
                         {filteredList.map(todo => {
                             return (
-                                <div>
-                                    <p>{todo.text}</p>
-                                    <div>
-                                    <EditIcon onClick={() => editTodo(todo.text)}></EditIcon>
-                                    <DeleteIcon onClick={() => deleteTodo(todo.text)}></DeleteIcon>
-                                    </div>
-                                </div>
+                                <Todo key={todo.id} todo={todo} todos={todos} setTodos={setTodos} />
                             )
                         })}
                     </div>
