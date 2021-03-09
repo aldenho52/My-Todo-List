@@ -26,10 +26,6 @@ input {
 }
 
 button:disabled {
-  width: 100%;
-  border: 2px solid #1890ff;
-  color: white;
-  background: #1890ff;
   opacity: 0.5;
 }
 
