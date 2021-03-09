@@ -13,8 +13,6 @@ const initialFormErrors = {
     newtodo: ''
 }
 
-
-
 const TodoList = () => {
     const { push } = useHistory();
     const [searchInput, setSearchInput] = useState('')

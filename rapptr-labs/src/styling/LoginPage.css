@@ -9,10 +9,18 @@
   }
   
 .input-container > input {
-    padding-left: 40px;
+    padding-left: 30px;
   }
 
 .icons {
     size: 5px;
     margin-bottom: 10px;
+}
+
+input {
+  outline: none;
+ }
+
+.invalid {
+  border: 3px solid red;
 }

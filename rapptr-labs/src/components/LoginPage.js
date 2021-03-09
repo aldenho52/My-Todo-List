@@ -76,6 +76,7 @@ const LoginPage = () => {
                     name="user_email"
                     type="email"
                     placeholder="user@rapptrlabs.com"
+                    className={errors.user_email ? 'invalid' : ''}
                 />
                 </div>
                 <div style={{ color: 'red' }}>
@@ -92,6 +93,7 @@ const LoginPage = () => {
                         name="user_password"
                         type="password"
                         placeholder='Must be at least 4 characters'
+                        className={errors.user_password ? 'invalid' : ''}
                     />
                 </div>
                 <div style={{ color: 'red' }}>
