@@ -9,6 +9,10 @@ import schema from '../validation/NewTodoSchema';
 
 import Todo from './Todo';
 
+const initialValues = {
+    newtodo: ''
+}
+
 const initialFormErrors = {
     newtodo: ''
 }
@@ -16,10 +20,13 @@ const initialFormErrors = {
 const TodoList = () => {
     const { push } = useHistory();
     const [searchInput, setSearchInput] = useState('')
-    const [todos, setTodos] = useState(JSON.parse(localStorage.getItem('todoList')))
-    const [newTodo, setNewTodo] = useState('')
+    const [todos, setTodos] = useState(() => {
+        return localStorage.getItem('todoList') ? JSON.parse(localStorage.getItem('todoList')): []
+    })
+    const [newTodo, setNewTodo] = useState(initialValues)
     const [errors, setErrors] = useState(initialFormErrors);
     const [addTodo, setAddTodo] = useState(false)
+    const [disabled, setDisabled] = useState(true);
 
     const setFormErrors = (name, value) => {
         yup
@@ -31,17 +38,16 @@ const TodoList = () => {
 
     useEffect(() => {
         localStorage.setItem('todoList', JSON.stringify(todos))
-    }, [todos])
+        schema.isValid(newTodo).then(valid => setDisabled(!valid));
+    }, [todos, newTodo])
 
 
     const submitNewTodo = e => {
         e.preventDefault()
         const incomingTodo = {
             id: Math.floor(Math.random()*100000),
-            editing: false,
             text: newTodo
         }
-        console.log(incomingTodo)
         if (todos.length === 0) {
             setTodos([incomingTodo])
         } else(
@@ -50,6 +56,7 @@ const TodoList = () => {
         setAddTodo(false)
         setNewTodo('')
     }
+    
     const showAddTodo = () => {
         setAddTodo(true)
     }
@@ -57,7 +64,7 @@ const TodoList = () => {
     const onChangeNewTodo = (e) => {
         const { name, value } = e.target;
         setFormErrors(name, value); 
-        setNewTodo(e.target.value)
+        setNewTodo({...newTodo, [e.target.name]: value})
       };
 
     const onChangeSearch = (e) => {
@@ -69,7 +76,7 @@ const TodoList = () => {
       }
 
     const filteredList = todos.filter((item) => {
-        return item.text.toLowerCase().indexOf(searchInput.toLowerCase()) !== -1
+        return item.text.newtodo.toLowerCase().indexOf(searchInput.toLowerCase()) !== -1
     })
 
     return (
@@ -97,14 +104,17 @@ const TodoList = () => {
                         <form onSubmit={submitNewTodo}>
                             <label>
                             <input 
-                                value={newTodo}
+                                value={newTodo.newtodo}
                                 onChange={onChangeNewTodo}
                                 name="newtodo"
                                 type="text"
                                 placeholder="new todo"
                             />
+                            <div style={{ color: 'red' }}>
+                                {errors.newTodo ? `${errors.newtodo}` : ''}
+                            </div>
                             </label>
-                            <button>Save</button>
+                            <button disabled={disabled}>Save</button>
                             <div style={{ color: 'red' }}>
                                 {errors.newtodo ? `${errors.newtodo}` : ''}
                             </div>

@@ -23,16 +23,11 @@ const Todo = props => {
     const [disabled, setDisabled] = useState(true);
 
     useEffect(() => {
-        schema.isValid(editInput).then(valid => setDisabled(true));
+        schema.isValid(editInput).then(valid => setDisabled(!valid));
       }, [editInput]);
 
-      const onChangeNewTodo = (e) => {
-        const { name, value } = e.target;
-        setFormErrors(name, value); 
-        setEditInput(e.target.value)
-      };
 
-      const setFormErrors = (name, value) => {
+    const setFormErrors = (name, value) => {
         yup
           .reach(schema, name)
           .validate(value)
@@ -40,16 +35,23 @@ const Todo = props => {
           .catch(err => setErrors({ ...errors, [name]: err.errors[0] }));
       };
 
+      const onChangeNewTodo = (e) => {
+        const { name, value } = e.target;
+        setFormErrors(name, value); 
+        setEditInput({...editInput, [e.target.name]: value})
+      };
+
+
     const editTodo = textValue => {
         console.log(textValue)
-        setEditInput(textValue)
+        setEditInput({...editInput, edittodo: textValue})
         setEditing(true)
     }
 
     const saveEdits = e => {
         e.preventDefault()
         let updatedTodo = todo
-        updatedTodo.text = editInput
+        updatedTodo.text.newtodo = editInput.edittodo
         let updatedTodoList = [...todos]
         let index = updatedTodoList.findIndex(
             el => el.id === todo.id
@@ -61,11 +63,11 @@ const Todo = props => {
     const deleteTodo = textValue => {
         console.log(textValue)
         const index = todos.findIndex(todo => {
-            return todo.text === textValue
+            return todo.text.newtodo === textValue
         })
         console.log(index)
         const updatedList = todos.filter(todo => {
-            return todo.text !== textValue
+            return todo.text.newtodo !== textValue
         })
         setTodos(updatedList)
     }
@@ -78,22 +80,22 @@ const Todo = props => {
                 <form onSubmit={saveEdits}>
                     <label>
                     <input 
-                        value={editInput}
+                        value={editInput.edittodo}
                         onChange={onChangeNewTodo}
                         name="edittodo"
                         type="text"
                         placeholder="new todo"
                     />
                     </label>
-                    <button>Save</button>
+                    <button disabled={disabled}>Save</button>
                 </form>
             </div>
         :
         <div>
-            <p>{todo.text}</p>
+            <p>{todo.text.newtodo}</p>
             <div>
-            <EditIcon onClick={() => editTodo(todo.text)}></EditIcon>
-            <DeleteIcon onClick={() => deleteTodo(todo.text)}></DeleteIcon>
+            <EditIcon onClick={() => editTodo(todo.text.newtodo)}></EditIcon>
+            <DeleteIcon onClick={() => deleteTodo(todo.text.newtodo)}></DeleteIcon>
             </div>
         </div>}
         </div>
