@@ -8,7 +8,7 @@ export default yup.object().shape({
     .required("email is required"),
   user_password: yup
     .string()
-    .required("username is required")
+    .required("password is required")
     .min(4, "Must be at least 4 characters")
     .max(16),
 });

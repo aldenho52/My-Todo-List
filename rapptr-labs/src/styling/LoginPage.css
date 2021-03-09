@@ -25,6 +25,10 @@ input {
   border: 3px solid red;
 }
 
+button:disabled {
+  opacity: 50%;
+}
+
 @media (min-width: 600px) {
   .input-container-login > img {
     position: absolute;
