@@ -52,10 +52,14 @@ const StyledInput = styled.input`
 const StyledSearchBtn = styled.button`
     border-radius: 30px;
     margin-left: 5%;
+    color: white;
+    background: #1890ff;
 `;
 const StyledError = styled.div`
     color: red;
     font-size: 0.7rem;
+    padding-left: 8%;
+    margin-bottom: 3%;
 `;
 const StyledButton = styled.button`
     border: 2px solid #1890ff;
@@ -63,11 +67,36 @@ const StyledButton = styled.button`
     background: #1890ff;
     margin: 2% 2% 0 0;
 `;
-const StyledAddTodoDiv = styled.div`
-    flex: display;
+const StyledForm = styled.form`
+    display: flex;
     justify-content: space-between;
+    width: 100%;
+    padding-top: 5%;
 `;
 
+const StyledSaveInput = styled.input`
+    margin-left: 10%;    
+    height: 4vh;
+    width: 70%;
+    font-size: 1.15rem;
+`;
+const StyledSaveBtn = styled.button`
+    border: 2px solid black;
+    color: white;
+    font-weight: 900;
+    background: black;
+    margin: 2% 5% 0 0;
+    width: 25%;
+    height: 4vh;
+`;
+
+const StyledAddDiv = styled.div`
+    border-bottom: 3px solid black;
+`;
+
+
+
+// initial state and error values
 const initialValues = {
     newtodo: ''
 }
@@ -160,11 +189,11 @@ const TodoList = () => {
                     </label>
                     <StyledSearchBtn onClick={showAddTodo}>New</StyledSearchBtn>
                 </StyledInputContainer>
-                {addTodo && 
-                <StyledAddTodoDiv>
-                <form onSubmit={submitNewTodo}>
+                {addTodo &&
+                <StyledAddDiv>
+                <StyledForm onSubmit={submitNewTodo}>
                     <label>
-                    <input 
+                    <StyledSaveInput 
                         value={newTodo.newtodo}
                         onChange={onChangeNewTodo}
                         name="newtodo"
@@ -175,12 +204,13 @@ const TodoList = () => {
                         {errors.newTodo ? `${errors.newtodo}` : ''}
                     </div>
                     </label>
-                    <button disabled={disabled}>Save</button>
-                    <StyledError>
+                    <StyledSaveBtn disabled={disabled}>Save</StyledSaveBtn>
+                </StyledForm>
+                <StyledError>
                         {errors.newtodo ? `${errors.newtodo}` : ''}
-                    </StyledError>
-                </form>
-                </StyledAddTodoDiv>}
+                </StyledError>
+                </StyledAddDiv> 
+                }
                 {filteredList.map(todo => {
                     return (
                         <Todo key={todo.id} todo={todo} todos={todos} setTodos={setTodos} />
