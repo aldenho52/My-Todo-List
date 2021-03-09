@@ -21,7 +21,6 @@ const TodoList = () => {
     const [todos, setTodos] = useState([])
     const [newTodo, setNewTodo] = useState('')
     const [errors, setErrors] = useState(initialFormErrors);
-    const [editTodoInput, setEditTodoInput] = useState({})
     const [addTodo, setAddTodo] = useState(false)
 
     const setFormErrors = (name, value) => {

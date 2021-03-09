@@ -1,19 +1,36 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
+// validation
+import * as yup from 'yup';
+import schema from '../validation/TodoSchema.js';
 
+// icons
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+
 const Todo = props => {
     const {todo, todos, setTodos} = props
     const [editing, setEditing] = useState(false)
     const [editInput, setEditInput] = useState('')
+    const [errors, setErrors] = useState('');
+    const [disabled, setDisabled] = useState(true);
 
+    useEffect(() => {
+        schema.isValid(editInput).then(valid => setDisabled(!valid));
+      }, [editInput]);
+
+      const setFormErrors = (name, value) => {
+        yup
+          .reach(schema, name)
+          .validate(value)
+          .then(() => setErrors({ ...errors, [name]: '' }))
+          .catch(err => setErrors({ ...errors, [name]: err.errors[0] }));
+      };
 
     const editTodo = textValue => {
         console.log(textValue)
         setEditInput(textValue)
         setEditing(true)
-
     }
 
     const saveEdits = e => {
@@ -42,17 +59,9 @@ const Todo = props => {
 
     const onChangeNewTodo = (e) => {
         const { name, value } = e.target;
-        // setFormErrors(name, value); 
+        setFormErrors(name, value); 
         setEditInput(e.target.value)
       };
-
-    //   const setFormErrors = (name, value) => {
-    //     yup
-    //       .reach(schema, name)
-    //       .validate(value)
-    //       .then(() => setErrors({ ...errors, [name]: '' }))
-    //       .catch(err => setErrors({ ...errors, [name]: err.errors[0] }));
-    //   };
 
 
     return (
@@ -64,12 +73,12 @@ const Todo = props => {
                     <input 
                         value={editInput}
                         onChange={onChangeNewTodo}
-                        name="newtodo"
+                        name="editTodo"
                         type="text"
                         placeholder="new todo"
                     />
                     </label>
-                    <button>Save</button>
+                    <button disabled={disabled}>Save</button>
                 </form>
             </div>
         :
