@@ -18,7 +18,7 @@ const initialFormErrors = {
 const TodoList = () => {
     const { push } = useHistory();
     const [searchInput, setSearchInput] = useState('')
-    const [todos, setTodos] = useState([])
+    const [todos, setTodos] = useState(JSON.parse(localStorage.getItem('todoList')))
     const [newTodo, setNewTodo] = useState('')
     const [errors, setErrors] = useState(initialFormErrors);
     const [addTodo, setAddTodo] = useState(false)
@@ -32,11 +32,8 @@ const TodoList = () => {
       };
 
     useEffect(() => {
-        
+        localStorage.setItem('todoList', JSON.stringify(todos))
     }, [todos])
-
-
-
 
 
     const submitNewTodo = e => {

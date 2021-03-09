@@ -8,16 +8,29 @@ import schema from '../validation/TodoSchema.js';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+const initialFormErrors = {
+    edittodo: ''
+}
+const initialValues = {
+    edittodo: ''
+}
+
 const Todo = props => {
     const {todo, todos, setTodos} = props
     const [editing, setEditing] = useState(false)
-    const [editInput, setEditInput] = useState('')
-    const [errors, setErrors] = useState('');
+    const [editInput, setEditInput] = useState(initialValues)
+    const [errors, setErrors] = useState(initialFormErrors);
     const [disabled, setDisabled] = useState(true);
 
     useEffect(() => {
-        schema.isValid(editInput).then(valid => setDisabled(!valid));
+        schema.isValid(editInput).then(valid => setDisabled(true));
       }, [editInput]);
+
+      const onChangeNewTodo = (e) => {
+        const { name, value } = e.target;
+        setFormErrors(name, value); 
+        setEditInput(e.target.value)
+      };
 
       const setFormErrors = (name, value) => {
         yup
@@ -57,12 +70,6 @@ const Todo = props => {
         setTodos(updatedList)
     }
 
-    const onChangeNewTodo = (e) => {
-        const { name, value } = e.target;
-        setFormErrors(name, value); 
-        setEditInput(e.target.value)
-      };
-
 
     return (
         <div>
@@ -73,12 +80,12 @@ const Todo = props => {
                     <input 
                         value={editInput}
                         onChange={onChangeNewTodo}
-                        name="editTodo"
+                        name="edittodo"
                         type="text"
                         placeholder="new todo"
                     />
                     </label>
-                    <button disabled={disabled}>Save</button>
+                    <button>Save</button>
                 </form>
             </div>
         :
