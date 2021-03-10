@@ -1,2 +1,3 @@
-# Rapptr_Labs_Coding_test
-Login page and to-do list for Rapptr Labs
+My Todo List
+
+Login with any email and pw then begin the productivity train!
